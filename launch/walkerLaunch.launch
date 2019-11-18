@@ -1,6 +1,6 @@
 <launch>
 
-  <node pkg="turtle_tutorial" type="walker" name="walker" />
+  <node pkg="turtleTutorial" type="walker" name="walker" />
 
 
 </launch>

@@ -6,7 +6,7 @@
     <arg name="world_file" value="/home/viki/turtlebot_custom_gazebo_worlds/ethan_world3.world" />
   </include>  
 
-
+  <node pkg="turtleTutorial" type="walker" name="walker" />
 
 
 </launch>
