@@ -3,7 +3,7 @@
 
 
   <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch" >
-    <arg name="world_file" value="/home/viki/turtlebot_custom_gazebo_worlds/ethan_world3.world" />
+    <arg name="world_file" value="$(find turtleTutorial)/worlds/ethan_world.world" />
   </include>  
 
   <node pkg="turtleTutorial" type="walker" name="walker" />
