@@ -36,6 +36,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <kobuki_msgs/BumperEvent.h>
+#include <gazebo_msgs/DeleteModel.h>
 #include <stdlib.h>
 
 /**
@@ -52,6 +53,11 @@ class myTurtleClass {
     // Subscribing to Bump Events
     sub_ = n_.subscribe("mobile_base/events/bumper", 1,
                         &myTurtleClass::callback, this);
+
+    //service client
+    client_ = n_.serviceClient < gazebo_msgs::DeleteModel
+        > ("/gazebo/delete_model");
+
   }
 
   /**
@@ -62,7 +68,18 @@ class myTurtleClass {
    * @return none
    */
   void callback(const kobuki_msgs::BumperEvent::ConstPtr& input) {
+    bool throwaway;
+    std::string modelName("cube_20k_1");
     ROS_INFO_STREAM("Uh oh!!");
+
+    //delete a box
+    //RemoveModel(const std::string &cube_20k_1);
+    gazebo_msgs::DeleteModel dmsrv;
+    dmsrv.request.model_name = "cube_20k_1";
+    if (client_.call(dmsrv)) {
+      //something
+    }
+
     // When bumpevent happens turn the robot instead of going straight
     geometry_msgs::Twist output;
     // make turtle turn
@@ -71,12 +88,14 @@ class myTurtleClass {
     // do turn
     output.angular.z = 3;
     pub_.publish(output);
+
   }
 
  private:
   ros::NodeHandle n_;
   ros::Publisher pub_;
   ros::Subscriber sub_;
+  ros::ServiceClient client_;
 };
 // End of class myTurleClass
 
